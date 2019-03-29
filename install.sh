@@ -3,7 +3,6 @@ mkdir GhostInHand_1.0.1
 cp info.json GhostInHand_1.0.1
 cp README.md GhostInHand_1.0.1
 cp LICENSE GhostInHand_1.0.1
-cp changelog.txt
 cp thumbnail.png GhostInHand_1.0.1
 cp *.lua GhostInHand_1.0.1
 zip -r GhostInHand_1.0.1{.zip,}

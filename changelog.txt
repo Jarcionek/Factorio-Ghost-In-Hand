@@ -1,5 +1,0 @@
-1.0.1 (29/03/2019)
-- Fixed incorrect homepage link.
-
-1.0.0 (29/03/2019)
-- Initial release.
