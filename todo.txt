@@ -1,0 +1,2 @@
+replace held ghost item with an actual item when it gets resupplied by logistic bots?
+probably has to be conditional, only when it was mod that put the ghost in hand (and not the player themselves)
