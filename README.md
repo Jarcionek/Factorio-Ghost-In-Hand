@@ -13,6 +13,9 @@ This was reported as [bug 68557](https://forums.factorio.com/viewtopic.php?f=23&
 
 # Changelog
 
+### pending changes
+* Updated mod's title to contain spaces.
+
 ### 1.0.1 (29/03/2019)
 * Fixed incorrect homepage link.
 
