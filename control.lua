@@ -1,34 +1,15 @@
 local function memory_of(player)
+    if global.player_memory == nill then
+        global.player_memory = {}
+    end
+    if global.player_memory[player.index] == nill then
+        global.player_memory[player.index] = {
+            held_item_name = nil,
+            ignore_next = false
+        }
+    end
     return global.player_memory[player.index]
 end
-
-local function init_player(player)
-    --if global.player_memory == nil then
-    --    return
-    --end
-
-    global.player_memory[player.index] = global.player_memory[player.index] or {}
-
-    memory_of(player).held_item_name = nil
-    memory_of(player).ignore_next = false
-end
-
-script.on_init(function()
-    global.player_memory = global.player_memory or {}
-    for _, player in pairs(game.players) do
-        init_player(player)
-    end
-end)
-
-script.on_event(defines.events.on_player_created, function(event)
-    init_player(game.players[event.player_index])
-end)
-
-script.on_event(defines.events.on_player_joined_game, function(event)
-    init_player(game.players[event.player_index])
-end)
-
-
 
 script.on_event(defines.events.on_player_cursor_stack_changed, function(event)
     local player = game.players[event.player_index]
