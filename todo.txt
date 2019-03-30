@@ -1,2 +1,5 @@
 replace held ghost item with an actual item when it gets resupplied by logistic bots?
 probably has to be conditional, only when it was mod that put the ghost in hand (and not the player themselves)
+
+
+BUGFIX: placing a blueprint from hand to inventory, fills the hand with an empty blueprint
