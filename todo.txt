@@ -2,4 +2,16 @@ replace held ghost item with an actual item when it gets resupplied by logistic 
 probably has to be conditional, only when it was mod that put the ghost in hand (and not the player themselves)
 
 
-BUGFIX: placing a blueprint from hand to inventory, fills the hand with an empty blueprint
+
+
+
+change thumbnail
+
+
+
+BUG: when putting last stack of items into chest, it puts the ghost of some previous item into hand
+- probably same when dropping items on the ground
+- what about placing in vehicles/cargo wagons?
+- what about logistic trash slots?
+
+
