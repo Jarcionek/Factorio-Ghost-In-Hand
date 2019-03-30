@@ -22,8 +22,12 @@ script.on_event(defines.events.on_player_cursor_stack_changed, function(event)
     end
 
     if player.cursor_stack ~= nil and player.cursor_stack.valid and player.cursor_stack.valid_for_read then
-        memory_of(player).held_item_name = player.cursor_stack.name
-    else
+        if player.cursor_stack.prototype.place_result ~= nil or player.cursor_stack.prototype.place_as_tile_result ~= nil then
+            memory_of(player).held_item_name = player.cursor_stack.name
+        else
+            memory_of(player).held_item_name = nil
+        end
+    elseif memory_of(player).held_item_name ~= nil then
         player.cursor_ghost = memory_of(player).held_item_name
     end
 end)
