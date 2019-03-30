@@ -1,17 +1,11 @@
 replace held ghost item with an actual item when it gets resupplied by logistic bots?
 probably has to be conditional, only when it was mod that put the ghost in hand (and not the player themselves)
+probably configurable too
 
 
 
 
 
 change thumbnail
-
-
-
-BUG: when putting last stack of items into chest, it puts the ghost of some previous item into hand
-- probably same when dropping items on the ground
-- what about placing in vehicles/cargo wagons?
-- what about logistic trash slots?
 
 
