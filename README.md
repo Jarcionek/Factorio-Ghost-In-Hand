@@ -18,8 +18,9 @@ This was reported as [bug 68557](https://forums.factorio.com/viewtopic.php?f=23&
 
 # Changelog
 
-### pending changes
+### 1.0.2 (30/03/2019)
 * Updated mod's title to contain spaces.
+* Fixed a bug which was putting ghosts of non-building items in hand (such as wires, blueprints, capsules). Now only buildings and tiles are replaced with a ghost.
 
 ### 1.0.1 (29/03/2019)
 * Fixed incorrect homepage link.
