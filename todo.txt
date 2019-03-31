@@ -9,3 +9,4 @@ probably configurable too
 change thumbnail
 
 
+bug: when the item selected on the toolbelt gets deselected, the mod puts a ghost in the hand
