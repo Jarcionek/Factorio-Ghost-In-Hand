@@ -1,9 +1,7 @@
 local function memory_of(player)
-    if global.player_memory == nill then
-        global.player_memory = {}
-    end
+    global.player_memory = global.player_memory or {}
 
-    if global.player_memory[player.index] == nill then
+    if not global.player_memory[player.index] then
         global.player_memory[player.index] = {
             last_held_item_name = nil,
             ignore_next = false,
@@ -19,13 +17,11 @@ script.on_event(defines.events.on_player_cursor_stack_changed, function(event)
 
     if memory_of(player).ignore_next then
         memory_of(player).ignore_next = false
-        do
-            return
-        end
+        return
     end
 
-    if player.cursor_stack ~= nil and player.cursor_stack.valid and player.cursor_stack.valid_for_read then
-        if player.cursor_stack.prototype.place_result ~= nil or player.cursor_stack.prototype.place_as_tile_result ~= nil then
+    if player.cursor_stack and player.cursor_stack.valid and player.cursor_stack.valid_for_read then
+        if player.cursor_stack.prototype.place_result or player.cursor_stack.prototype.place_as_tile_result then
             memory_of(player).last_held_item_name = player.cursor_stack.name
         else
             memory_of(player).last_held_item_name = nil
@@ -36,7 +32,7 @@ script.on_event(defines.events.on_player_cursor_stack_changed, function(event)
             return
         end
 
-        if memory_of(player).last_held_item_name ~= nil then
+        if memory_of(player).last_held_item_name then
             player.cursor_ghost = memory_of(player).last_held_item_name
         end
     end
@@ -44,7 +40,6 @@ end)
 
 script.on_event("GhostInHand_clean-cursor", function(event)
     local player = game.players[event.player_index]
-
     memory_of(player).ignore_next = true
 end)
 
