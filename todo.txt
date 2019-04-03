@@ -1,0 +1,15 @@
+replace held ghost item with an actual item when it gets resupplied by logistic bots?
+probably has to be conditional, only when it was mod that put the ghost in hand (and not the player themselves)
+probably configurable too
+
+
+
+bug: when the item selected on the toolbelt gets deselected, the mod puts a ghost in the hand
+- check if can be fixed by listening to on_player_tool_inventory_changed
+- otherwise I might have to track all the changes to the toolbar
+- this happens only when the selected item on the belt is clicked to put it back (rather than hitting Q)
+
+
+
+bug: if I have an item X in hand, and select an item Y on the toolbelt that I don't have,
+I end up with selected item on the toolbelt and a ghost of X in hand
