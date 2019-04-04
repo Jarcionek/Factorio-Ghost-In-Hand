@@ -3,55 +3,110 @@ local function memory_of(player)
 
     if not global.player_memory[player.index] then
         global.player_memory[player.index] = {
-            last_held_item_name = nil,
-            ignore_next = false,
-            is_gui_open = false
+            last_held_item_name = nil
         }
     end
 
     return global.player_memory[player.index]
 end
 
-script.on_event(defines.events.on_player_cursor_stack_changed, function(event)
-    local player = game.players[event.player_index]
+local function count_item(player, item_name)
+    local count = player.get_main_inventory().get_item_count(item_name)
+    if player.cursor_stack and player.cursor_stack.valid and player.cursor_stack.valid_for_read then
+        count = count + player.cursor_stack.count
+    end
+    return count
+end
 
-    if memory_of(player).ignore_next then
-        memory_of(player).ignore_next = false
+local function attempt_place_ghost_in_hands(player)
+    if player.cursor_stack and player.cursor_stack.valid and player.cursor_stack.valid_for_read then
         return
     end
+    if not memory_of(player).last_held_item_name then
+        return
+    end
+    if count_item(player, memory_of(player).last_held_item_name) > 0 then
+        return
+    end
+    player.cursor_ghost = memory_of(player).last_held_item_name
+end
+
+script.on_event(defines.events.on_player_cursor_stack_changed, function(event)
+    local player = game.players[event.player_index]
 
     if player.cursor_stack and player.cursor_stack.valid and player.cursor_stack.valid_for_read then
         if player.cursor_stack.prototype.place_result or player.cursor_stack.prototype.place_as_tile_result then
             memory_of(player).last_held_item_name = player.cursor_stack.name
-        else
-            memory_of(player).last_held_item_name = nil
         end
-
     else
-        if player.mod_settings["GhostInHand_disable-when-gui-open"].value and memory_of(player).is_gui_open then
-            return
-        end
-
-        -- TODO check if player has the last held item in inventory, and if they do, don't set the ghost (because it means that they put that item back themselves)
-        -- do I then still need clean-cursor event?
-
-        if memory_of(player).last_held_item_name then
-            player.cursor_ghost = memory_of(player).last_held_item_name
-        end
+        player.print("on_player_cursor_stack_changed, nothing in cursor now")
+        memory_of(player).last_held_item_name = nil
     end
+
+    attempt_place_ghost_in_hands(player)
 end)
 
-script.on_event("GhostInHand_clean-cursor", function(event)
+-- the only event fired for building real tiles
+script.on_event(defines.events.on_player_built_tile, function(event)
     local player = game.players[event.player_index]
-    memory_of(player).ignore_next = true
+    if player.cursor_stack and player.cursor_stack.valid and player.cursor_stack.valid_for_read then
+        player.print("on_player_built_tile, count " .. player.cursor_stack.count)
+    else
+        player.print("on_player_built_tile, cursor invalid")
+    end
+
+    attempt_place_ghost_in_hands(player)
 end)
 
-script.on_event(defines.events.on_gui_opened, function(event)
+-- the only event fired for building ghost tiles
+-- 1. placing item normally
+script.on_event(defines.events.on_built_entity, function(event)
     local player = game.players[event.player_index]
-    memory_of(player).is_gui_open = true;
+    if player.cursor_stack and player.cursor_stack.valid and player.cursor_stack.valid_for_read then
+        player.print("on_built_entity, count " .. player.cursor_stack.count)
+    else
+        player.print("on_built_entity, cursor invalid")
+    end
+
+    attempt_place_ghost_in_hands(player)
 end)
 
-script.on_event(defines.events.on_gui_closed, function(event)
+script.on_event(defines.events.on_put_item, function(event)
     local player = game.players[event.player_index]
-    memory_of(player).is_gui_open = false;
+    if player.cursor_stack and player.cursor_stack.valid and player.cursor_stack.valid_for_read then
+        player.print("on_put_item, count " .. player.cursor_stack.count)
+    else
+        player.print("on_put_item, cursor invalid")
+    end
+
+    attempt_place_ghost_in_hands(player)
 end)
+
+-- TODO what if players puts something in chest? while holding that item?
+script.on_event(defines.events.on_player_main_inventory_changed, function(event)
+    local player = game.players[event.player_index]
+    if player.cursor_stack and player.cursor_stack.valid and player.cursor_stack.valid_for_read then
+        player.print("on_player_main_inventory_changed, count " .. player.cursor_stack.count)
+    else
+        player.print("on_player_main_inventory_changed, cursor invalid")
+    end
+
+    attempt_place_ghost_in_hands(player)
+end)
+
+-- scenarios to test:
+-- 1. player puts a real item
+--      a) no more items in inventory
+--      b) next stack is taken from main inventory
+-- 2. player puts an item holding shift (and personal robots take it from inventory)
+--      a) no more items in inventory
+--      b) next stack is taken from main inventory
+-- 3. player puts a real tile
+--      a) no more items in inventory
+--      b) next stack is taken from main inventory
+-- 4. player puts a tile holding shift (and personal robots take it from inventory)
+--      a) no more items in inventory
+--      b) next stack is taken from main inventory
+
+-- if a player held a lamp and put it down, and then went towards a placed ghost lamp and robots took it from main inventory
+-- then ghost lamp should not be put in players hands
