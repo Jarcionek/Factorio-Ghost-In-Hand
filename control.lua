@@ -39,8 +39,8 @@ script.on_event(defines.events.on_player_cursor_stack_changed, function(event)
             memory_of(player).last_held_item_name = player.cursor_stack.name
         end
     else
-        player.print("on_player_cursor_stack_changed, nothing in cursor now")
-        memory_of(player).last_held_item_name = nil
+--        player.print("on_player_cursor_stack_changed, nothing in cursor now")
+--        memory_of(player).last_held_item_name = nil
     end
 
     attempt_place_ghost_in_hands(player)
@@ -82,6 +82,30 @@ script.on_event(defines.events.on_put_item, function(event)
     attempt_place_ghost_in_hands(player)
 end)
 
+local function cursor_ghost_string(player)
+    if player.cursor_ghost then
+        return player.cursor_ghost.name
+    else
+        return "nil"
+    end
+end
+
+local function as_string(nullable_string)
+    if nullable_string then
+        return nullable_string
+    else
+        return "nil"
+    end
+end
+
+local function nullable_count(player, nullable_string)
+    if nullable_string then
+        count_item(player, nullable_string)
+    else
+        return "nil"
+    end
+end
+
 -- TODO what if players puts something in chest? while holding that item?
 script.on_event(defines.events.on_player_main_inventory_changed, function(event)
     local player = game.players[event.player_index]
@@ -95,11 +119,13 @@ script.on_event(defines.events.on_player_main_inventory_changed, function(event)
 
     local last_held_item_name = memory_of(player).last_held_item_name
 
-    if memory_of(player).last_held_item_name
-            and player.cursor_ghost == last_held_item_name
-            and count_item(player, last_held_item_name) > 0 then
+    player.print("last_held_item_name = " .. as_string(last_held_item_name) .. ", cursor_ghost = " .. cursor_ghost_string(player) .. ", count = " .. nullable_count(player, last_held_item_name))
+
+    if last_held_item_name and player.cursor_ghost == last_held_item_name and count_item(player, last_held_item_name) > 0 then
         local item_stack = player.get_main_inventory().find_item_stack(last_held_item_name)
+        player.print("item_stack is " .. item_stack.name .. " and count is " .. item_stack.count)
         if player.cursor_stack.can_set_stack(item_stack) then --TODO or should I use swap stack here? is this going to duplicate items?
+            player.print("can set in cursor")
             player.cursor_stack.set_stack(item_stack)
         end
     end
