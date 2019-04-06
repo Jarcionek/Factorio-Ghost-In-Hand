@@ -13,3 +13,6 @@ bug: when the item selected on the toolbelt gets deselected, the mod puts a ghos
 
 bug: if I have an item X in hand, and select an item Y on the toolbelt that I don't have,
 I end up with selected item on the toolbelt and a ghost of X in hand
+
+
+bug: placing a last robot in the world causes its ghost to be put in place...
