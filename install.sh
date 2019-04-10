@@ -6,6 +6,7 @@ cp LICENSE GhostInHand_1.0.3
 cp thumbnail.png GhostInHand_1.0.3
 cp *.lua GhostInHand_1.0.3
 cp -R locale GhostInHand_1.0.3
+cp changelog.txt GhostInHand_1.0.3
 zip -r GhostInHand_1.0.3{.zip,}
 
 # move zip to factorio mods folder (overriding existing one if present)

@@ -1,0 +1,28 @@
+---------------------------------------------------------------------------------------------------
+Version: 1.0.4
+Date: not yet released
+  Changes:
+    - Added new thumbnail.
+    - Added changelog.
+---------------------------------------------------------------------------------------------------
+Version: 1.0.3
+Date: 30/03/2019
+  Bugfixes:
+    - Fixed a bug which was putting ghost item in hand, when held item was put in chest, vehicle, logistic trash slot etc. This is now controllable with a "Disable when any GUI open" setting (selected by default).
+---------------------------------------------------------------------------------------------------
+Version: 1.0.2
+Date: 30/03/2019
+  Changes:
+    - Updated mod's title to contain spaces.
+  Bugfixes:
+    - Fixed a bug which was putting ghosts of non-building items in hand (such as wires, blueprints, capsules). Now only buildings and tiles are replaced with a ghost.
+---------------------------------------------------------------------------------------------------
+Version: 1.0.1
+Date: 29/03/2019
+  Bugfixes:
+    - Fixed incorrect homepage link.
+---------------------------------------------------------------------------------------------------
+Version: 1.0.0
+Date: 29/03/2019
+  Info:
+    - Initial release.
