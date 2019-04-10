@@ -28,6 +28,9 @@ script.on_event(defines.events.on_player_cursor_stack_changed, function(event)
         end
 
     else
+        if player.cursor_ghost then
+            return
+        end
         if player.mod_settings["GhostInHand_disable-when-gui-open"].value and memory_of(player).is_gui_open then
             return
         end

@@ -4,6 +4,8 @@ Date: not yet released
   Changes:
     - Added new thumbnail.
     - Added changelog.
+  Bugfixes:
+    - Fixed a bug which was putting a ghost item in hand, when a player clicked another item on the toolbelt, that they don't have in their inventory (and player had "Pick ghost item if no items are available" enabled).
 ---------------------------------------------------------------------------------------------------
 Version: 1.0.3
 Date: 30/03/2019
