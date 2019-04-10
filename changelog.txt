@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------------------------------
 Version: 1.0.4
-Date: not yet released
+Date: 10/04/2019
   Changes:
     - Added new thumbnail.
     - Added changelog.
