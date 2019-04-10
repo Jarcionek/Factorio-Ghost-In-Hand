@@ -15,7 +15,9 @@ script.on_event(defines.events.on_player_cursor_stack_changed, function(event)
     local player = game.players[event.player_index]
 
     if player.cursor_stack and player.cursor_stack.valid and player.cursor_stack.valid_for_read then
-        if player.cursor_stack.prototype.place_result or player.cursor_stack.prototype.place_as_tile_result then
+        if (player.cursor_stack.prototype.place_result or player.cursor_stack.prototype.place_as_tile_result)
+                and player.cursor_stack.name ~= "construction-robot" and player.cursor_stack.name ~= "logistic-robot"
+        then
             memory_of(player).last_held_item_name = player.cursor_stack.name
         else
             memory_of(player).last_held_item_name = nil
