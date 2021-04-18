@@ -37,6 +37,7 @@ script.on_event(defines.events.on_player_cursor_stack_changed, function(event)
                 return -- player has that item in their inventory, so they must have put it down themselves (by using 'clean cursor' action or clicking the item on the toolbelt)
             end
             player.cursor_ghost = last_held_item
+            memory_of(player).last_held_item_name = nil
         end
     end
 end)
