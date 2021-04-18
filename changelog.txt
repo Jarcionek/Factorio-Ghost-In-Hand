@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 1.0.6
+Date: 18/04/2021
+  Changes:
+    - Fixed a bug where the player could not use the clear cursor command while holding a ghost
+    - Updated to Factorio version 1.1
+---------------------------------------------------------------------------------------------------
 Version: 1.0.5
 Date: 18/02/2020
   Changes:
